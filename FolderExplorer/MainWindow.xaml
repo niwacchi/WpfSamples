@@ -1,0 +1,48 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="FolderExplorer.MainWindow"
+        xmlns:my="clr-namespace:FolderExplorer"
+        Title="Folder Explorer" Height="350" Width="525">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="RootFolderDataProvider">
+            <ObjectDataProvider.ObjectInstance>
+                <my:Folder FullPath="C:\"></my:Folder>
+            </ObjectDataProvider.ObjectInstance>
+        </ObjectDataProvider>
+        <HierarchicalDataTemplate DataType="{x:Type my:Folder}" ItemsSource="{Binding Path=SubFolders}">
+            <TextBlock Text="{Binding Path=Name}" />            
+        </HierarchicalDataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TreeView Grid.ColumnSpan="1"  Margin="0" Grid.RowSpan="2" Name="treeView1">
+            <TreeViewItem ItemsSource="{Binding Path=SubFolders, Source={StaticResource RootFolderDataProvider}}" Header="Folders" />
+        </TreeView>
+        <ListView Grid.Column="1" Margin="0" Name="listView1"
+                  ItemsSource="{Binding Path=SelectedItem.SubFolders, ElementName=treeView1, Mode=OneWay}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <ListView Grid.Column="1" Margin="0" Grid.Row="1" Name="listView2"
+                  ItemsSource="{Binding Path=SelectedItem.Files, ElementName=treeView1, Mode=OneWay}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Window>
