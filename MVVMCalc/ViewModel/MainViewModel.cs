@@ -16,7 +16,7 @@ namespace MVVMCalc.ViewModel
         private CalculateTypeViewModel selectedCalculateType;
         private DelegateCommand calculateCommand;
 
-        private MainViewModel()
+        public MainViewModel()
         {
             this.CalculateTypes = CalculateTypeViewModel.Create();
             this.SelectedCalculateType = this.CalculateTypes.First();

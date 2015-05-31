@@ -39,7 +39,7 @@ namespace MVVMCalc.Common
 
         public bool CanExecute()
         {
-            return this.CanExecute();
+            return this.canExecute();
         }
 
         bool ICommand.CanExecute(object parameter)
