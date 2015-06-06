@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdventureWorksCustomerEdito
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMCalc", "MVVMCalc\MVVMCalc.csproj", "{1AE31628-C203-4841-A6F0-A4CDD77902F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMCalcPrism", "MVVMCalcPrism\MVVMCalcPrism.csproj", "{40BF0221-4A83-47C1-A829-D2AA94001420}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{1AE31628-C203-4841-A6F0-A4CDD77902F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AE31628-C203-4841-A6F0-A4CDD77902F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AE31628-C203-4841-A6F0-A4CDD77902F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40BF0221-4A83-47C1-A829-D2AA94001420}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40BF0221-4A83-47C1-A829-D2AA94001420}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40BF0221-4A83-47C1-A829-D2AA94001420}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40BF0221-4A83-47C1-A829-D2AA94001420}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

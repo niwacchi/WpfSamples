@@ -1,0 +1,22 @@
+﻿<Application x:Class="MVVMCalcPrism.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:MVVMCalcPrism.ViewModel"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             Startup="Application_Stratup">
+    <Application.Resources>
+        <DataTemplate DataType="{x:Type vm:CalculateTypeViewModel}">
+            <TextBlock Text="{Binding Label}"></TextBlock>
+        </DataTemplate>         
+        <Style TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Mode=Self}}"></Setter>
+                    <Setter Property="Background" Value="Pink"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Application.Resources>
+</Application>
