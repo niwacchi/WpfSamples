@@ -20,9 +20,7 @@ namespace MVVMCalc.ViewModel
         {
             this.CalculateTypes = CalculateTypeViewModel.Create();
             this.SelectedCalculateType = this.CalculateTypes.First();
-
-            this.Lhs = string.Empty;
-            this.Rhs = string.Empty;
+            this.InitializeProperties();
         }
 
         public IEnumerable<CalculateTypeViewModel> CalculateTypes { get; private set; }
@@ -117,7 +115,25 @@ namespace MVVMCalc.ViewModel
         private void CalculateExecute()
         {
             var calc = new Calculator();
-            this.Answer = calc.Execute(double.Parse(this.Lhs), double.Parse(this.Rhs), this.SelectedCalculateType.CalculateType);
+            this.Answer = calc.Execute(
+                double.Parse(this.Lhs),
+                double.Parse(this.Rhs),
+                this.SelectedCalculateType.CalculateType);
+
+            if(IsInvalidAnswer())
+            {
+                this.ErrorMessenger.Raise(
+                    new Message("計算結果が実数の範囲を超えました。入力値を初期化しますか？"),
+                    m =>
+                    {
+                        if (!(bool)m.Response)
+                        {
+                            return;
+                        }
+
+                        InitializeProperties();
+                    });
+            }
         }
 
         private bool CanCalculateExecute()
@@ -129,6 +145,29 @@ namespace MVVMCalc.ViewModel
         {
             var temp = default(double);
             return double.TryParse(value, out temp);
+        }
+
+        private Messenger errorMessenger = new Messenger();
+
+        public Messenger ErrorMessenger
+        {
+            get
+            {
+                return this.errorMessenger;
+            }
+        }
+
+        private bool IsInvalidAnswer()
+        {
+            return double.IsInfinity(this.Answer) || double.IsNaN(this.Answer);
+        }
+
+        private void InitializeProperties()
+        {
+            this.Lhs = string.Empty;
+            this.Rhs = string.Empty;
+            this.Answer = default(double);
+            this.SelectedCalculateType = this.CalculateTypes.First();
         }
     }
 }
