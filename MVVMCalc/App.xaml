@@ -7,5 +7,13 @@
         <DataTemplate DataType="{x:Type vm:CalculateTypeViewModel}">
             <TextBlock Text="{Binding Label}"></TextBlock>
         </DataTemplate>         
+        <Style TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Mode=Self}}"></Setter>
+                    <Setter Property="Background" Value="Pink"></Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Application.Resources>
 </Application>

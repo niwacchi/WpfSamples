@@ -10,8 +10,8 @@ namespace MVVMCalc.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private double lhs;
-        private double rhs;
+        private string lhs;
+        private string rhs;
         private double answer;
         private CalculateTypeViewModel selectedCalculateType;
         private DelegateCommand calculateCommand;
@@ -20,6 +20,9 @@ namespace MVVMCalc.ViewModel
         {
             this.CalculateTypes = CalculateTypeViewModel.Create();
             this.SelectedCalculateType = this.CalculateTypes.First();
+
+            this.Lhs = string.Empty;
+            this.Rhs = string.Empty;
         }
 
         public IEnumerable<CalculateTypeViewModel> CalculateTypes { get; private set; }
@@ -38,7 +41,7 @@ namespace MVVMCalc.ViewModel
             }
         }
 
-        public double Lhs
+        public string Lhs
         {
             get
             {
@@ -48,11 +51,20 @@ namespace MVVMCalc.ViewModel
             set
             {
                 this.lhs = value;
+                if (!this.IsDouble(value))
+                {
+                    this.SetError("Lhs", "数字を入力してください");
+                }
+                else
+                {
+                    this.ClearError("Lhs");
+                }
+                
                 this.RaisePropertyChanged("Lhs");
             }            
         }
 
-        public double Rhs
+        public string Rhs
         {
             get
             {
@@ -62,6 +74,15 @@ namespace MVVMCalc.ViewModel
             set
             {
                 this.rhs = value;
+                if(!this.IsDouble(value))
+                {
+                    this.SetError("Rhs", "数字を入力してください");
+                }
+                else
+                {
+                    this.ClearError("Rhs");
+                }
+
                 this.RaisePropertyChanged("Rhs");
             }
         }
@@ -96,12 +117,18 @@ namespace MVVMCalc.ViewModel
         private void CalculateExecute()
         {
             var calc = new Calculator();
-            this.Answer = calc.Execute(this.Lhs, this.Rhs, this.SelectedCalculateType.CalculateType);
+            this.Answer = calc.Execute(double.Parse(this.Lhs), double.Parse(this.Rhs), this.SelectedCalculateType.CalculateType);
         }
 
         private bool CanCalculateExecute()
         {
-            return this.SelectedCalculateType.CalculateType != CalculateType.None;
+            return this.SelectedCalculateType.CalculateType != CalculateType.None && !this.HasError;
+        }
+
+        private bool IsDouble(string value)
+        {
+            var temp = default(double);
+            return double.TryParse(value, out temp);
         }
     }
 }
